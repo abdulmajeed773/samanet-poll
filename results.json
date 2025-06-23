@@ -1,0 +1,15 @@
+import json
+
+async def handle_vote(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message.web_app_data:
+        return
+
+    data = json.loads(update.message.web_app_data.data)
+    poll_id = data.get("poll_id")
+    answer = data.get("answer")
+    user = update.effective_user.first_name
+
+    # تخزين التصويت – مثال: print أو حفظه في GitHub لاحقًا
+    print(f"{user} اختار {answer} في استفتاء {poll_id}")
+
+    await update.message.reply_text("✅ تم تسجيل تصويتك بنجاح!")
