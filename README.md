@@ -1,1 +1,0 @@
-# samanet-poll
