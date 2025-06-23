@@ -18,29 +18,38 @@
 </head>
 <body>
 
-  <h2>❓ ما رأيك في سمانت؟</h2>
-
-  <button onclick="sendVote('رائع')">رائع</button>
-  <button onclick="sendVote('جيد')">جيد</button>
-  <button onclick="sendVote('تحتاج تحسين')">تحتاج تحسين</button>
+  <h2 id="poll-question">جارٍ تحميل الاستفتاء...</h2>
+  <div id="options"></div>
 
   <script>
-    const pollId = "2025-06-24"; // يمكن تغييره في كل استفتاء
+    const pollId = "2025-06-24";
+
     if (localStorage.getItem("voted_" + pollId)) {
       document.body.innerHTML = "<h2>✅ لقد قمت بالتصويت مسبقًا.</h2>";
     }
 
-    function sendVote(choice) {
-      const payload = JSON.stringify({
-        poll_id: pollId,
-        answer: choice
+    fetch("https://raw.githubusercontent.com/abdulmajeed773/samanet-poll/main/poll.js?t=" + Date.now())
+      .then(res => res.text())
+      .then(script => {
+        eval(script);
+        const q = document.getElementById("poll-question");
+        const optionsDiv = document.getElementById("options");
+
+        q.textContent = window.pollData.question;
+        window.pollData.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.textContent = opt;
+          btn.onclick = function () {
+            Telegram.WebApp.sendData(JSON.stringify({
+              poll_id: pollId,
+              answer: opt
+            }));
+            localStorage.setItem("voted_" + pollId, "true");
+            Telegram.WebApp.close();
+          };
+          optionsDiv.appendChild(btn);
+        });
       });
-
-      Telegram.WebApp.sendData(payload);
-      localStorage.setItem("voted_" + pollId, "true");
-      Telegram.WebApp.close();
-    }
   </script>
-
 </body>
 </html>
