@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>استبيان سمانت</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: Tahoma; text-align: center; padding: 30px; background: #f9f9f9; }
+    h2 { margin-bottom: 20px; }
+    button {
+      width: 90%; max-width: 300px; margin: 10px auto;
+      padding: 15px; font-size: 16px; border: none;
+      background-color: #2d89ef; color: white; border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #1967c7; }
+  </style>
+</head>
+<body>
+
+  <h2>❓ ما رأيك في سمانت؟</h2>
+
+  <button onclick="sendVote('رائع')">رائع</button>
+  <button onclick="sendVote('جيد')">جيد</button>
+  <button onclick="sendVote('تحتاج تحسين')">تحتاج تحسين</button>
+
+  <script>
+    const pollId = "2025-06-24"; // يمكن تغييره في كل استفتاء
+    if (localStorage.getItem("voted_" + pollId)) {
+      document.body.innerHTML = "<h2>✅ لقد قمت بالتصويت مسبقًا.</h2>";
+    }
+
+    function sendVote(choice) {
+      const payload = JSON.stringify({
+        poll_id: pollId,
+        answer: choice
+      });
+
+      Telegram.WebApp.sendData(payload);
+      localStorage.setItem("voted_" + pollId, "true");
+      Telegram.WebApp.close();
+    }
+  </script>
+
+</body>
+</html>
