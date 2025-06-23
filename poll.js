@@ -1,4 +1,4 @@
 window.pollData = {
-  question: "كيف حالك؟",
-  options: ['بخير', 'تعبان']
+  question: "كيفك",
+  options: ["جيد", "متعب"]
 };
