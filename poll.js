@@ -1,4 +1,4 @@
 window.pollData = {
-  question: "dfdsdfsd",
-  options: ["gfdgdf", "gdfgdfg"]
+  question: "الاتىى",
+  options: ['البر', 'غلباع']
 };
