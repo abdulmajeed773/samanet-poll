@@ -19,4 +19,3 @@
 3. أرسل رسالة من البوت إلى endpoint:
 
 
-curl -X POST http://<server_ip>:5000/notify -d '{"message": "🔔 سيتم فصل الشبكة بعد قليل"}' -H "Content-Type: application/json"
