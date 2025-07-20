@@ -7,6 +7,11 @@ latest_message = ""
 def receive_message():
     global latest_message
     latest_message = request.json.get("text", "")
+    
+    # حفظ الرسالة في ملف JSON للمستقبل أو واجهة HTML
+    with open("static/notice.json", "w") as f:
+        json.dump({"message": latest_message}, f, ensure_ascii=False)
+    
     print(f"📥 Received message: {latest_message}")
     return "✅ Message saved", 200
 
